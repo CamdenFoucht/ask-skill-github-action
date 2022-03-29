@@ -25,7 +25,7 @@ jobs:
           aws-region: us-east-1
       - run: mkdir ~/.ask
       - run: touch ~/.ask/cli_config
-      - run: |
+      - run: >
             jq -n --arg ask_default_profile "$ASK_DEFAULT_PROFILE" \ 
               --arg ask_access_token "$ASK_ACCESS_TOKEN" \
               --arg ask_refresh_token "$ASK_REFRESH_TOKEN" \
