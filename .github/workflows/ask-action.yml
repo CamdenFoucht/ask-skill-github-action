@@ -23,17 +23,17 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      - run: mkdir ~/.ask
-      - run: touch ~/.ask/cli_config
       - run: |
+            mkdir ~/.ask
+            touch ~/.ask/cli_config
             jq -n --arg ask_default_profile "$ASK_DEFAULT_PROFILE" --arg ask_access_token "$ASK_ACCESS_TOKEN"  --arg ask_refresh_token "$ASK_REFRESH_TOKEN" --arg ask_vendor_id "$ASK_VENDOR_ID" '{"profiles": { "my-skill": {"token": {"access_token": "\($ask_access_token)", "refresh_token": "\($ask_refresh_token)", "token_type": "bearer", "expires_in": 3600, "expires_at": "2020-03-29T05:03:21.994Z"}, "vendor_id": "\($ask_vendor_id)", "aws_profile": "default"}}}'  > ~/.ask/cli_config
-      - run: cat ~/.ask/cli_config
-      - run: mkdir ~/.aws
-      - run: touch ~/.aws/credentials
+            cat ~/.ask/cli_config
       - run: |
+            mkdir ~/.aws
+            touch ~/.aws/credentials
             echo [default] > ~/.aws/credentials
             echo aws_access_key_id="$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
             echo aws_secret_access_key="$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
-      - run: cat ~/.aws/credentials
+            cat ~/.aws/credentials
       - run: npm install -g ask-cli
       - run: ask deploy --profile my-skill
