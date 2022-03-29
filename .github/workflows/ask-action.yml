@@ -28,6 +28,7 @@ jobs:
           aws-region: us-east-1
       - run: mkdir ~/.ask
       - run: touch ~/.ask/cli_config
-      - run: jq -n --arg ask_default_profile "$ASK_DEFAULT_PROFILE" --arg ask_access_token "$ASK_ACCESS_TOKEN" --arg ask_refresh_token "$ASK_REFRESH_TOKEN" --arg ask_vendor_id "$ASK_VENDOR_ID" --arg aws_access_key "$AWS_ACCESS_KEY_ID" --arg aws_secret_key "$AWS_SECRET_ACCESS_KEY"  '{"profiles": { "exampleProfile": {"token": {"access_token": "\($ask_access_token)", "refresh_token": "\($ask_refresh_token)"}, "vendor_id": "\($ask_vendor_id)", "aws_profile": "default"}}}' > ~/.ask/cli_config
+      - run: |
+            jq -n --arg ask_default_profile "$ASK_DEFAULT_PROFILE" --arg ask_access_token "$ASK_ACCESS_TOKEN" --arg ask_refresh_token "$ASK_REFRESH_TOKEN" --arg ask_vendor_id "$ASK_VENDOR_ID" --arg aws_access_key "$AWS_ACCESS_KEY_ID" --arg aws_secret_key "$AWS_SECRET_ACCESS_KEY"  '{"profiles": { "exampleProfile": {"token": {"access_token": "\($ask_access_token)", "refresh_token": "\($ask_refresh_token)"}, "vendor_id": "\($ask_vendor_id)", "aws_profile": "default"}}}' > ~/.ask/cli_config
       - run: cat ~/.ask/cli_config
       - run: npm install -g ask-cli
