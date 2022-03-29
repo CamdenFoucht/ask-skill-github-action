@@ -21,7 +21,7 @@ jobs:
       - run: |
             mkdir ~/.ask
             touch ~/.ask/cli_config
-            jq -n --arg ask_default_profile "$ASK_DEFAULT_PROFILE" --arg ask_access_token "$ASK_ACCESS_TOKEN"  --arg ask_refresh_token "$ASK_REFRESH_TOKEN" --arg ask_vendor_id "$ASK_VENDOR_ID" '{"profiles": { "my-skill": {"token": {"access_token": "\($ask_access_token)", "refresh_token": "\($ask_refresh_token)", "token_type": "bearer", "expires_in": 3600, "expires_at": "2022-03-29T17:13:04.043Z"}, "vendor_id": "\($ask_vendor_id)", "aws_profile": "default"}}}'  > ~/.ask/cli_config
+            jq -n --arg ask_default_profile "$ASK_DEFAULT_PROFILE" --arg ask_access_token "$ASK_ACCESS_TOKEN"  --arg ask_refresh_token "$ASK_REFRESH_TOKEN" --arg ask_vendor_id "$ASK_VENDOR_ID" '{"profiles": { "my-skill": {"token": {"access_token": "\($ask_access_token)", "refresh_token": "\($ask_refresh_token)", "token_type": "bearer", "expires_in": 3600, "expires_at": "2019-03-29T17:13:04.043Z"}, "vendor_id": "\($ask_vendor_id)", "aws_profile": "default"}}}'  > ~/.ask/cli_config
             cat ~/.ask/cli_config
       - run: |
             mkdir ~/.aws
