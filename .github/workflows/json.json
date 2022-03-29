@@ -1,1 +1,0 @@
-jq -n --arg greeting world '{"profiles": { "exampleProfile": {"token": {"access_token": 123, "refresh_token": 234}, "vendor_id": "M25EH65UXVAD0Y", "aws_profile": "default"}}}}'
