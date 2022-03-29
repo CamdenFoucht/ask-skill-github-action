@@ -1,0 +1,34 @@
+name: Alexa
+
+on:
+  workflow_dispatch:
+
+jobs:
+  alexa-deploy:
+    runs-on: [ubuntu-latest]
+    env:
+      ASK_DEFAULT_PROFILE: "my-skill"
+      ASK_ACCESS_TOKEN: ${{ secrets.ASK_ACCESS_TOKEN }}
+      ASK_REFRESH_TOKEN: ${{ secrets.ASK_REFRESH_TOKEN }}
+      ASK_VENDOR_ID: ${{ secrets.ASK_VENDOR_ID }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - run: apt install jq
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: "npm"
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Create ask cli config
+        - run: mkdir ~/.ask
+        - run: touch ~/.ask/cli_config
+        - run: jq -n --arg ask_default_profile "$ASK_DEFAULT_PROFILE" --arg ask_access_token "$ASK_ACCESS_TOKEN" --arg ask_refresh_token "$ASK_REFRESH_TOKEN" --arg ask_vendor_id "$ASK_VENDOR_ID" --arg aws_access_key "$AWS_ACCESS_KEY_ID" --arg aws_secret_key "$AWS_SECRET_ACCESS_KEY"  '{"profiles": { "exampleProfile": {"token": {"access_token": "\($ask_access_token)", "refresh_token": "\($ask_refresh_token)"}, "vendor_id": "\($ask_vendor_id)", "aws_profile": "default"}}}' > ~/.ask/cli_config
+        - run: cat ~/.ask/cli_config
+      - run: npm install -g ask-cli
